@@ -15,5 +15,15 @@ namespace HangFire.Highlighter
 
             Database.SetInitializer(new MigrateDatabaseToLatestVersion<HighlighterDbContext, Configuration>());
         }
+
+        protected void Application_BeginRequest()
+        {
+            StackExchange.Profiling.MiniProfiler.Start();
+        }
+
+        protected void Application_EndRequest()
+        {
+            StackExchange.Profiling.MiniProfiler.Stop();
+        }
     }
 }
