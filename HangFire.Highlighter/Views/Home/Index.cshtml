@@ -1,7 +1,26 @@
-﻿
-@{
-    ViewBag.Title = "Index";
-}
+﻿@* ~/Views/Index.cshtml *@
 
-<h2>Index</h2>
+@model IEnumerable<HangFire.Highlighter.Models.CodeSnippet>
+@{ ViewBag.Title = "Snippets"; }
 
+<h2>Snippets</h2>
+
+<p><a class="btn btn-primary" href="@Url.Action("Create")">Create Snippet</a></p>
+<table class="table">
+    <tr>
+        <th>Code</th>
+        <th>Created At</th>
+        <th>Highlighted At</th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                <a href="@Url.Action("Details", new { id = item.Id })">@Html.Raw(item.HighlightedCode)</a>
+            </td>
+            <td>@item.CreatedAt</td>
+            <td>@item.HighlightedAt</td>
+        </tr>
+     }
+</table>
