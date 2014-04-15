@@ -8,5 +8,7 @@ namespace HangFire.Highlighter.Models
             : base("HighlighterDb")
         {
         }
+
+        public DbSet<CodeSnippet> CodeSnippets { get; set; }
     }
 }
