@@ -39,3 +39,9 @@ input[type="checkbox"].input-validation-error {
 .validation-summary-valid {
     display: none;
 }
+
+pre {
+    padding: 0;
+    background: transparent;
+    border: none;
+}
