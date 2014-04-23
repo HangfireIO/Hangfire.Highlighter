@@ -4,7 +4,9 @@ using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web.Mvc;
+using HangFire.Highlighter.Hubs;
 using HangFire.Highlighter.Models;
+using Microsoft.AspNet.SignalR;
 
 namespace HangFire.Highlighter.Controllers
 {
@@ -61,6 +63,10 @@ namespace HangFire.Highlighter.Controllers
                 snippet.HighlightedAt = DateTime.UtcNow;
 
                 db.SaveChanges();
+
+                var hubContext = GlobalHost.ConnectionManager.GetHubContext<SnippetHub>();
+                hubContext.Clients.Group(SnippetHub.GetGroup(snippet.Id))
+                    .highlight(snippet.HighlightedCode);
             }
         }
 
