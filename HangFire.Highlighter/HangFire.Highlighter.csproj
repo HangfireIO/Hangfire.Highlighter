@@ -172,6 +172,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Hubs\SnippetHub.cs" />
+    <Compile Include="Jobs\SnippetHighlighter.cs" />
     <Compile Include="Migrations\201404151514437_AddCodeSnippet.cs" />
     <Compile Include="Migrations\201404151514437_AddCodeSnippet.Designer.cs">
       <DependentUpon>201404151514437_AddCodeSnippet.cs</DependentUpon>

@@ -1,12 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Net.Http;
-using System.Threading.Tasks;
 using System.Web.Mvc;
-using HangFire.Highlighter.Hubs;
+using HangFire.Highlighter.Jobs;
 using HangFire.Highlighter.Models;
-using Microsoft.AspNet.SignalR;
 
 namespace HangFire.Highlighter.Controllers
 {
@@ -43,31 +39,13 @@ namespace HangFire.Highlighter.Controllers
                 using (StackExchange.Profiling.MiniProfiler.StepStatic("Job enqueue"))
                 {
                     // Enqueue a job
-                    BackgroundJob.Enqueue(() => HighlightSnippet(snippet.Id));
+                    BackgroundJob.Enqueue<SnippetHighlighter>(x => x.Highlight(snippet.Id));
                 }
 
                 return RedirectToAction("Details", new { id = snippet.Id });
             }
 
             return View(snippet);
-        }
-
-        public static void HighlightSnippet(int snippetId)
-        {
-            using (var db = new HighlighterDbContext())
-            {
-                var snippet = db.CodeSnippets.Find(snippetId);
-                if (snippet == null) return;
-
-                snippet.HighlightedCode = HighlightSource(snippet.SourceCode);
-                snippet.HighlightedAt = DateTime.UtcNow;
-
-                db.SaveChanges();
-
-                var hubContext = GlobalHost.ConnectionManager.GetHubContext<SnippetHub>();
-                hubContext.Clients.Group(SnippetHub.GetGroup(snippet.Id))
-                    .highlight(snippet.HighlightedCode);
-            }
         }
 
         protected override void Dispose(bool disposing)
@@ -77,37 +55,6 @@ namespace HangFire.Highlighter.Controllers
                 _db.Dispose();
             }
             base.Dispose(disposing);
-        }
-
-        private static async Task<string> HighlightSourceAsync(string source)
-        {
-            using (var client = new HttpClient())
-            {
-                var response = await client.PostAsync(
-                    @"http://hilite.me/api",
-                    new FormUrlEncodedContent(new Dictionary<string, string>
-                {
-                    { "lexer", "c#" },
-                    { "style", "vs" },
-                    { "code", source }
-                }));
-
-                response.EnsureSuccessStatusCode();
-
-                return await response.Content.ReadAsStringAsync();
-            }
-        }
-
-        private static string HighlightSource(string source)
-        {
-            // Microsoft.Net.Http does not provide synchronous API,
-            // so we are using wrapper to perform a sync call.
-            return RunSync(() => HighlightSourceAsync(source));
-        }
-
-        private static TResult RunSync<TResult>(Func<Task<TResult>> func)
-        {
-            return Task.Run<Task<TResult>>(func).Unwrap().GetAwaiter().GetResult();
         }
     }
 }
