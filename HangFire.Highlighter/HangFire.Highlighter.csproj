@@ -43,6 +43,9 @@
     <Reference Include="Common.Logging">
       <HintPath>..\packages\Common.Logging.2.1.2\lib\net40\Common.Logging.dll</HintPath>
     </Reference>
+    <Reference Include="CronExpressionDescriptor">
+      <HintPath>..\packages\CronExpressionDescriptor.1.10.1\lib\net35\CronExpressionDescriptor.dll</HintPath>
+    </Reference>
     <Reference Include="Dapper">
       <HintPath>..\packages\Dapper.1.13\lib\net45\Dapper.dll</HintPath>
     </Reference>
@@ -52,17 +55,17 @@
     <Reference Include="EntityFramework.SqlServer">
       <HintPath>..\packages\EntityFramework.6.1.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
-    <Reference Include="HangFire.Core, Version=0.8.3.0, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="HangFire.Core, Version=0.9.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\HangFire.Core.0.8.3\lib\net40\HangFire.Core.dll</HintPath>
+      <HintPath>..\packages\HangFire.Core.0.9.0\lib\net40\HangFire.Core.dll</HintPath>
     </Reference>
-    <Reference Include="HangFire.SqlServer, Version=0.8.3.0, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="HangFire.SqlServer, Version=0.9.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\HangFire.SqlServer.0.8.3\lib\net40\HangFire.SqlServer.dll</HintPath>
+      <HintPath>..\packages\HangFire.SqlServer.0.9.0\lib\net40\HangFire.SqlServer.dll</HintPath>
     </Reference>
-    <Reference Include="HangFire.Web, Version=0.8.3.0, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="HangFire.Web, Version=0.9.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\HangFire.Web.0.8.3\lib\net40\HangFire.Web.dll</HintPath>
+      <HintPath>..\packages\HangFire.Web.0.9.0\lib\net40\HangFire.Web.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.AspNet.SignalR.Core">
       <HintPath>..\packages\Microsoft.AspNet.SignalR.Core.2.0.3\lib\net45\Microsoft.AspNet.SignalR.Core.dll</HintPath>
@@ -82,6 +85,9 @@
     </Reference>
     <Reference Include="MiniProfiler">
       <HintPath>..\packages\MiniProfiler.2.1.0\lib\net40\MiniProfiler.dll</HintPath>
+    </Reference>
+    <Reference Include="NCrontab">
+      <HintPath>..\packages\ncrontab.1.0.0\lib\NCrontab.dll</HintPath>
     </Reference>
     <Reference Include="Newtonsoft.Json">
       <HintPath>..\packages\Newtonsoft.Json.5.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
