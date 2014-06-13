@@ -55,17 +55,17 @@
     <Reference Include="EntityFramework.SqlServer">
       <HintPath>..\packages\EntityFramework.6.1.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
-    <Reference Include="HangFire.Core, Version=0.9.0.0, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="HangFire.Core, Version=0.9.1.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\HangFire.Core.0.9.0\lib\net40\HangFire.Core.dll</HintPath>
+      <HintPath>..\packages\HangFire.Core.0.9.1\lib\net40\HangFire.Core.dll</HintPath>
     </Reference>
-    <Reference Include="HangFire.SqlServer, Version=0.9.0.0, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="HangFire.SqlServer, Version=0.9.1.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\HangFire.SqlServer.0.9.0\lib\net40\HangFire.SqlServer.dll</HintPath>
+      <HintPath>..\packages\HangFire.SqlServer.0.9.1\lib\net40\HangFire.SqlServer.dll</HintPath>
     </Reference>
-    <Reference Include="HangFire.Web, Version=0.9.0.0, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="HangFire.Web, Version=0.9.1.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\HangFire.Web.0.9.0\lib\net40\HangFire.Web.dll</HintPath>
+      <HintPath>..\packages\HangFire.Web.0.9.1\lib\net40\HangFire.Web.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.AspNet.SignalR.Core">
       <HintPath>..\packages\Microsoft.AspNet.SignalR.Core.2.0.3\lib\net45\Microsoft.AspNet.SignalR.Core.dll</HintPath>
