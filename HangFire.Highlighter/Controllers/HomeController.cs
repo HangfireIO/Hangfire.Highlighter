@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using System.Web.Mvc;
+using Hangfire;
 using HangFire.Highlighter.Jobs;
 using HangFire.Highlighter.Models;
 
