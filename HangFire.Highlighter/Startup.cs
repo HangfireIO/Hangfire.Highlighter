@@ -1,6 +1,5 @@
 ﻿using System;
 using Hangfire.Highlighter;
-using Hangfire;
 using Hangfire.SqlServer;
 using Microsoft.Owin;
 using Owin;
