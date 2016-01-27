@@ -1,6 +1,6 @@
 ﻿using System.Data.Entity;
 
-namespace HangFire.Highlighter.Models
+namespace Hangfire.Highlighter.Models
 {
     public class HighlighterDbContext : DbContext
     {

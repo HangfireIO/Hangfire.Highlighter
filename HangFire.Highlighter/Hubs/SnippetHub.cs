@@ -1,10 +1,10 @@
 ﻿using System.Data.Entity;
 using System.Linq;
 using System.Threading.Tasks;
-using HangFire.Highlighter.Models;
+using Hangfire.Highlighter.Models;
 using Microsoft.AspNet.SignalR;
 
-namespace HangFire.Highlighter.Hubs
+namespace Hangfire.Highlighter.Hubs
 {
     public class SnippetHub : Hub
     {

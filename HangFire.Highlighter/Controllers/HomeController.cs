@@ -2,10 +2,10 @@
 using System.Linq;
 using System.Web.Mvc;
 using Hangfire;
-using HangFire.Highlighter.Jobs;
-using HangFire.Highlighter.Models;
+using Hangfire.Highlighter.Jobs;
+using Hangfire.Highlighter.Models;
 
-namespace HangFire.Highlighter.Controllers
+namespace Hangfire.Highlighter.Controllers
 {
     public class HomeController : Controller
     {

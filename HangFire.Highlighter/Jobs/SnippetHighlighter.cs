@@ -2,11 +2,11 @@
 using System.Collections.Generic;
 using System.Net.Http;
 using System.Threading.Tasks;
-using HangFire.Highlighter.Hubs;
-using HangFire.Highlighter.Models;
+using Hangfire.Highlighter.Hubs;
+using Hangfire.Highlighter.Models;
 using Microsoft.AspNet.SignalR;
 
-namespace HangFire.Highlighter.Jobs
+namespace Hangfire.Highlighter.Jobs
 {
     public class SnippetHighlighter : IDisposable
     {

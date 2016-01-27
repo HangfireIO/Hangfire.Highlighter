@@ -1,4 +1,4 @@
-namespace HangFire.Highlighter.Migrations
+namespace Hangfire.Highlighter.Migrations
 {
     using System;
     using System.Data.Entity.Migrations;

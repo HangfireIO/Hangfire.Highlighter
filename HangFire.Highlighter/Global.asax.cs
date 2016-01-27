@@ -1,10 +1,10 @@
 ﻿using System.Data.Entity;
 using System.Web.Mvc;
 using System.Web.Routing;
-using HangFire.Highlighter.Migrations;
-using HangFire.Highlighter.Models;
+using Hangfire.Highlighter.Migrations;
+using Hangfire.Highlighter.Models;
 
-namespace HangFire.Highlighter
+namespace Hangfire.Highlighter
 {
     public class MvcApplication : System.Web.HttpApplication
     {
