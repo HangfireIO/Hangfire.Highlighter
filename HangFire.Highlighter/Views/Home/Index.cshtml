@@ -1,26 +1,35 @@
 ﻿@* ~/Views/Index.cshtml *@
 
-@model IEnumerable<HangFire.Highlighter.Models.CodeSnippet>
+@model ICollection<HangFire.Highlighter.Models.CodeSnippet>
 @{ ViewBag.Title = "Snippets"; }
 
 <h2>Snippets</h2>
 
-<p><a class="btn btn-primary" href="@Url.Action("Create")">Create Snippet</a></p>
-<table class="table">
-    <tr>
-        <th>Code</th>
-        <th>Created At</th>
-        <th>Highlighted At</th>
-    </tr>
+<p><a class="btn btn-primary" href="@Url.Action("Create")">Create Snippet</a>
+</p>
 
-    @foreach (var item in Model)
-    {
+@if (Model.Count > 0)
+{
+    <table class="table table-condensed">
         <tr>
-            <td>
-                <a href="@Url.Action("Details", new { id = item.Id })">@Html.Raw(item.HighlightedCode)</a>
-            </td>
-            <td>@item.CreatedAt</td>
-            <td>@item.HighlightedAt</td>
+            <th>Code</th>
+            <th>Created At</th>
+            <th>Highlighted At</th>
         </tr>
-     }
-</table>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    <a href="@Url.Action("Details", new { id = item.Id })">@Html.Raw(item.HighlightedCode)</a>
+                </td>
+                <td>@item.CreatedAt</td>
+                <td>@item.HighlightedAt</td>
+            </tr>
+        }
+    </table>
+}
+else
+{
+    <div class="alert alert-info">There are no snippets yet. Try to create a new one!</div>
+}
