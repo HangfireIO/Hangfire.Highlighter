@@ -41,7 +41,7 @@
                 var snippetId = $(this).data('snippet');
                 var snippet = $.connection.snippetHub;
 
-                snippet.client.highlight = function (highlightedCode) {
+                snippet.client.highlight = function (id, highlightedCode) {
                     $('#sourceCode').html(highlightedCode);
                 };
 

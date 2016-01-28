@@ -38,7 +38,7 @@ namespace Hangfire.Highlighter.Jobs
             _dbContext.SaveChanges();
 
             _hubContext.Clients.Group(SnippetHub.GetGroup(snippet.Id))
-                .highlight(snippet.HighlightedCode);
+                .highlight(snippet.Id, snippet.HighlightedCode);
         }
 
         public void CleanUp()
