@@ -1,4 +1,5 @@
 ﻿using System;
+using Hangfire.Dashboard;
 using Hangfire.Highlighter;
 using Hangfire.Highlighter.Jobs;
 using Hangfire.SqlServer;
@@ -21,7 +22,12 @@ namespace Hangfire.Highlighter
 
             RecurringJob.AddOrUpdate<SnippetHighlighter>(x => x.CleanUp(), "0 0 * * *");
 
-            app.UseHangfireDashboard();
+            var options = new DashboardOptions
+            {
+                AuthorizationFilters = new IAuthorizationFilter[0]
+            };
+            
+            app.UseHangfireDashboard("/hangfire", options);
             app.UseHangfireServer();
         }
     }
