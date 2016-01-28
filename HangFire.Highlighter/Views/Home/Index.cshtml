@@ -3,11 +3,15 @@
 
 <h2>Snippets</h2>
 
-<p><a class="btn btn-primary" href="@Url.Action("Create")">Create Snippet</a>
+<p>
+    <a class="btn btn-primary" href="@Url.Action("Create")">Create Snippet</a>
+    <a class="btn btn-default" href="@Url.Content("~/hangfire")">Dashboard</a>
 </p>
 
 @if (Model.Count > 0)
 {
+    <div class="alert alert-warning">All the snippets are removed every day at 12:00 AM (UTC)</div>
+
     <table class="table table-condensed">
         <tr>
             <th>Code</th>

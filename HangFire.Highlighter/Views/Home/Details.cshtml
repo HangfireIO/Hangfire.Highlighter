@@ -15,14 +15,16 @@
 </div>
 
 <div>
-    <div id="sourceCode" data-snippet="@Model.Id" data-subscribe="@(Model.HighlightedCode == null)">
+    <div id="sourceCode" data-snippet="@Model.Id" data-subscribe="@(Model.HighlightedCode == null)" style="margin-bottom: 20px;">
         @if (Model.HighlightedCode == null)
         {
-            <img src="~/Content/ajax-loader.gif" />
+            <img src="~/Content/ajax-loader.gif"/>
         }
         else
         {
             @Html.Raw(Model.HighlightedCode)
         }
     </div>
+
+    <a class="btn btn-default" href="@Url.Action("Index")">&larr; Back to List</a>
 </div>

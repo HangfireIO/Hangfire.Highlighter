@@ -1,5 +1,6 @@
 ﻿using System;
 using Hangfire.Highlighter;
+using Hangfire.Highlighter.Jobs;
 using Hangfire.SqlServer;
 using Microsoft.Owin;
 using Owin;
@@ -17,6 +18,8 @@ namespace Hangfire.Highlighter
             GlobalConfiguration.Configuration.UseSqlServerStorage(
                 "HighlighterDb",
                 new SqlServerStorageOptions { QueuePollInterval = TimeSpan.FromSeconds(1) });
+
+            RecurringJob.AddOrUpdate<SnippetHighlighter>(x => x.CleanUp(), "0 0 * * *");
 
             app.UseHangfireDashboard();
             app.UseHangfireServer();
