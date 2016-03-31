@@ -15,8 +15,11 @@ namespace Hangfire.Highlighter
             app.MapSignalR();
 
             GlobalConfiguration.Configuration.UseSqlServerStorage("HighlighterDb");
-
-            RecurringJob.AddOrUpdate<SnippetHighlighter>(x => x.CleanUp(), "0 0 * * *");
+            
+            RecurringJob.AddOrUpdate<SnippetHighlighter>(
+                "SnippetHighlighter.CleanUp",
+                x => x.CleanUpAsync(), 
+                "0 0 * * *");
 
             var options = new DashboardOptions
             {

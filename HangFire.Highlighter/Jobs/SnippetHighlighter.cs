@@ -41,9 +41,9 @@ namespace Hangfire.Highlighter.Jobs
                 .highlight(snippet.Id, snippet.HighlightedCode);
         }
 
-        public void CleanUp()
+        public async Task CleanUpAsync()
         {
-            _dbContext.Database.ExecuteSqlCommand("TRUNCATE TABLE [CodeSnippets]");
+            await _dbContext.Database.ExecuteSqlCommandAsync("TRUNCATE TABLE [CodeSnippets]");
         }
 
         public void Dispose()
