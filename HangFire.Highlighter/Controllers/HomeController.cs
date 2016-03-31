@@ -39,7 +39,7 @@ namespace Hangfire.Highlighter.Controllers
                 using (StackExchange.Profiling.MiniProfiler.StepStatic("Job enqueue"))
                 {
                     // Enqueue a job
-                    BackgroundJob.Enqueue<SnippetHighlighter>(x => x.Highlight(snippet.Id));
+                    BackgroundJob.Enqueue<SnippetHighlighter>(x => x.HighlightAsync(snippet.Id));
                 }
 
                 return RedirectToAction("Details", new { id = snippet.Id });

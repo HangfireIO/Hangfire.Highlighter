@@ -27,15 +27,15 @@ namespace Hangfire.Highlighter.Jobs
             _dbContext = dbContext;
         }
 
-        public void Highlight(int snippetId)
+        public async Task HighlightAsync(int snippetId)
         {
-            var snippet = _dbContext.CodeSnippets.Find(snippetId);
+            var snippet = await _dbContext.CodeSnippets.FindAsync(snippetId);
             if (snippet == null) return;
 
-            snippet.HighlightedCode = HighlightSource(snippet.SourceCode);
+            snippet.HighlightedCode = await HighlightSourceAsync(snippet.SourceCode);
             snippet.HighlightedAt = DateTime.UtcNow;
 
-            _dbContext.SaveChanges();
+            await _dbContext.SaveChangesAsync();
 
             _hubContext.Clients.Group(SnippetHub.GetGroup(snippet.Id))
                 .highlight(snippet.Id, snippet.HighlightedCode);
@@ -49,6 +49,12 @@ namespace Hangfire.Highlighter.Jobs
         public void Dispose()
         {
             _dbContext.Dispose();
+        }
+
+        [Obsolete]
+        public void Highlight(int snippetId)
+        {
+            throw new NotSupportedException("Please use HighlightAsync method instead.");
         }
 
         private static async Task<string> HighlightSourceAsync(string source)
@@ -68,18 +74,6 @@ namespace Hangfire.Highlighter.Jobs
 
                 return await response.Content.ReadAsStringAsync();
             }
-        }
-
-        private static string HighlightSource(string source)
-        {
-            // Microsoft.Net.Http does not provide synchronous API,
-            // so we are using wrapper to perform a sync call.
-            return RunSync(() => HighlightSourceAsync(source));
-        }
-
-        private static TResult RunSync<TResult>(Func<Task<TResult>> func)
-        {
-            return Task.Run<Task<TResult>>(func).Unwrap().GetAwaiter().GetResult();
         }
     }
 }
