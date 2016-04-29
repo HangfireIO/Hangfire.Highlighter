@@ -12,7 +12,7 @@ namespace Hangfire.Highlighter.Controllers
 
         public ActionResult Index()
         {
-            return View(_db.CodeSnippets.ToList());
+            return View(_db.CodeSnippets.OrderByDescending(x => x.Id).ToList());
         }
 
         public ActionResult Details(int id)
