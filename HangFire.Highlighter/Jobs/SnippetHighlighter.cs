@@ -20,8 +20,8 @@ namespace Hangfire.Highlighter.Jobs
 
         internal SnippetHighlighter(IHubContext hubContext, HighlighterDbContext dbContext)
         {
-            if (hubContext == null) throw new ArgumentNullException("hubContext");
-            if (dbContext == null) throw new ArgumentNullException("dbContext");
+            if (hubContext == null) throw new ArgumentNullException(nameof(hubContext));
+            if (dbContext == null) throw new ArgumentNullException(nameof(dbContext));
 
             _hubContext = hubContext;
             _dbContext = dbContext;
@@ -49,12 +49,6 @@ namespace Hangfire.Highlighter.Jobs
         public void Dispose()
         {
             _dbContext.Dispose();
-        }
-
-        [Obsolete]
-        public void Highlight(int snippetId)
-        {
-            throw new NotSupportedException("Please use HighlightAsync method instead.");
         }
 
         private static async Task<string> HighlightSourceAsync(string source)

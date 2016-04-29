@@ -23,7 +23,7 @@
         {
             <tr>
                 <td>
-                    <a href="@Url.Action("Details", new { id = item.Id })">@Html.Raw(item.HighlightedCode)</a>
+                    @Html.Raw(item.HighlightedCode)
                 </td>
                 <td>@item.CreatedAt</td>
                 <td>@item.HighlightedAt</td>
