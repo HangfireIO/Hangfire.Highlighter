@@ -36,6 +36,12 @@ namespace Hangfire.Highlighter.Jobs
             snippet.HighlightedAt = DateTime.UtcNow;
 
             await _dbContext.SaveChangesAsync();
+        }
+
+        public void SendToSubscribers(int snippetId)
+        {
+            var snippet = _dbContext.CodeSnippets.Find(snippetId);
+            if (snippet == null) return;
 
             _hubContext.Clients.Group(SnippetHub.GetGroup(snippet.Id))
                 .highlight(snippet.Id, snippet.HighlightedCode);

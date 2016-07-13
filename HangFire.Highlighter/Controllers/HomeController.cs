@@ -9,6 +9,7 @@ namespace Hangfire.Highlighter.Controllers
     public class HomeController : Controller
     {
         private readonly HighlighterDbContext _db = new HighlighterDbContext();
+        private readonly BackgroundJobClient _jobs = new BackgroundJobClient();
 
         public ActionResult Index()
         {
@@ -38,8 +39,8 @@ namespace Hangfire.Highlighter.Controllers
 
                 using (StackExchange.Profiling.MiniProfiler.StepStatic("Job enqueue"))
                 {
-                    // Enqueue a job
-                    BackgroundJob.Enqueue<SnippetHighlighter>(x => x.HighlightAsync(snippet.Id));
+                    var parentId = _jobs.Enqueue<SnippetHighlighter>(x => x.HighlightAsync(snippet.Id));
+                    _jobs.ContinueWith<SnippetHighlighter>(parentId, x => x.SendToSubscribers(snippet.Id));
                 }
 
                 return RedirectToAction("Details", new { id = snippet.Id });
