@@ -19,11 +19,11 @@ namespace Hangfire.Highlighter
             RecurringJob.AddOrUpdate<SnippetHighlighter>(
                 "SnippetHighlighter.CleanUp",
                 x => x.CleanUpAsync(), 
-                "0 0 * * *");
+                Cron.Daily);
 
             var options = new DashboardOptions
             {
-                AuthorizationFilters = new IAuthorizationFilter[0]
+                Authorization = new IDashboardAuthorizationFilter[0]
             };
             
             app.UseHangfireDashboard("/hangfire", options);
