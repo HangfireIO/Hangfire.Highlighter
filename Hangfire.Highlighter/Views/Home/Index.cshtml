@@ -1,37 +1,97 @@
 ﻿@model ICollection<CodeSnippet>
 @{ ViewBag.Title = "Snippets"; }
 
-<h2>Snippets</h2>
-
-<p>
-    <a class="btn btn-primary" href="@Url.Action("Create")">Create Snippet</a>
-    <a class="btn btn-default" href="@Url.Content("~/hangfire")">Dashboard</a>
-</p>
+<div class="alert alert-warning" style="margin-top: 20px;">
+    <p>
+        <strong>This sample allows you to highlight C# source code</strong>. Highlighting is based on
+        <a href="http://hilite.me" target="_blank">http://hilite.me</a> web service, which is called
+        from a background job in a truly asynchronous way – neither controller, nor
+        any other entity is waiting for a completion. Results are transmitted via WebSockets
+        using <a href="https://github.com/SignalR/SignalR" target="_blank">SignalR</a>.
+    </p>
+    <p>
+        All the snippets are removed every day at 12:00 AM UTC.
+    </p>
+</div>
 
 @if (Model.Count > 0)
 {
-    <div class="alert alert-warning">All the snippets are removed every day at 12:00 AM (UTC)</div>
-
-    <table class="table table-condensed">
-        <tr>
-            <th>Code</th>
-            <th>Created At</th>
-            <th>Highlighted At</th>
-        </tr>
-
+    <div class="visible-xs">
         @foreach (var item in Model)
         {
-            <tr>
-                <td>
-                    @Html.Raw(item.HighlightedCode)
-                </td>
-                <td>@item.CreatedAt</td>
-                <td>@item.HighlightedAt</td>
-            </tr>
+            <div style="margin-bottom: 10px;">
+                @Html.Partial("_Snippet", item)
+            </div>
         }
-    </table>
+    </div>
+    <div class="table-responsive hidden-xs">
+        <table class="table table-condensed">
+            <tr>
+                <th width="75%">Code</th>
+                <th class="text-right">Created</th>
+                <th class="text-right">Highlighted</th>
+            </tr>
+
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@Html.Partial("_Snippet", item)</td>
+                    <td class="text-right">@item.CreatedAt</td>
+                    <td class="text-right" data-snippet-highlighted="@item.Id">
+                        @if (item.HighlightedIn.HasValue)
+                        {
+                            @(item.HighlightedIn.Value.TotalMilliseconds.ToString("N0"))@:ms
+                        }
+                        else
+                        {
+                            <em>n/a</em>
+                        }
+                    </td>
+                </tr>
+            }
+        </table>
+    </div>
 }
 else
 {
-    <div class="alert alert-info">There are no snippets yet. Try to create a new one!</div>
+    <div class="alert alert-info">There are no code snippets yet. Try to create a new one!</div>
+}
+
+@section scripts
+{
+    <script>
+        $(function () {
+            var snippetHub = $.connection.snippetHub;
+            
+            snippetHub.client.highlight = function (id, highlightedCode, highlightedAt) {
+                console.log('Received data for snippet #' + id);
+                $('*[data-snippet="' + id + '"]').html(highlightedCode);
+                $('*[data-snippet-highlighted=' + id + ']').html(highlightedAt + 'ms');
+            };
+    
+            console.log('Connecting to the SnippetHub...');
+
+            $.connection.hub.start().done(function() {
+                console.log('Connection with the SnippetHub established!');
+
+                // We are going to store unique snippetIds, to
+                // not to subscribe twice.
+                var snippets = [];
+    
+                $('[data-subscribe=True]').each(function () {
+                    var snippetId = $(this).data('snippet');
+
+                    // Okay, this is not efficient, but at least simple ;-)
+                    if (snippets.indexOf(snippetId) < 0) {
+                        snippets.push(snippetId);
+                    }
+                });
+
+                for (var i = 0; i < snippets.length; i++) {
+                    console.log('Subscribing to snippet #' + snippets[i]);
+                    snippetHub.server.subscribe(snippets[i]);
+                }
+            });
+        });
+    </script>
 }

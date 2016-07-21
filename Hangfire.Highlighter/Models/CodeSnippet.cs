@@ -14,5 +14,7 @@ namespace Hangfire.Highlighter.Models
 
         public DateTime CreatedAt { get; set; }
         public DateTime? HighlightedAt { get; set; }
+
+        public TimeSpan? HighlightedIn => HighlightedAt.HasValue ? HighlightedAt.Value - CreatedAt : (TimeSpan?)null;
     }
 }

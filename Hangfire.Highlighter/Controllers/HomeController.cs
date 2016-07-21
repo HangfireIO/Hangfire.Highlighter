@@ -16,12 +16,6 @@ namespace Hangfire.Highlighter.Controllers
             return View(_db.CodeSnippets.OrderByDescending(x => x.Id).ToList());
         }
 
-        public ActionResult Details(int id)
-        {
-            var snippet = _db.CodeSnippets.Find(id);
-            return View(snippet);
-        }
-
         public ActionResult Create()
         {
             return View();
@@ -43,7 +37,7 @@ namespace Hangfire.Highlighter.Controllers
                     _jobs.ContinueWith<SnippetHighlighter>(parentId, x => x.SendToSubscribers(snippet.Id));
                 }
 
-                return RedirectToAction("Details", new { id = snippet.Id });
+                return RedirectToAction("Index", new { id = snippet.Id });
             }
 
             return View(snippet);

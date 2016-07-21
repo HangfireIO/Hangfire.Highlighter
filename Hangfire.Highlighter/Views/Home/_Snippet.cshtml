@@ -1,0 +1,11 @@
+﻿@model CodeSnippet
+<div data-snippet="@Model.Id" data-subscribe="@(Model.HighlightedCode == null)">
+    @if (Model.HighlightedCode == null)
+    {
+        <span class="text-waring"><img src="~/Content/ajax-loader.gif"> <em>Background job is processed...</em></span>
+    }
+    else
+    {
+        @Html.Raw(Model.HighlightedCode)
+    }
+</div>

@@ -44,7 +44,7 @@ namespace Hangfire.Highlighter.Jobs
             if (snippet == null) return;
 
             _hubContext.Clients.Group(SnippetHub.GetGroup(snippet.Id))
-                .highlight(snippet.Id, snippet.HighlightedCode);
+                .highlight(snippet.Id, snippet.HighlightedCode, snippet.HighlightedIn?.TotalMilliseconds.ToString("N0"));
         }
 
         public async Task CleanUpAsync()

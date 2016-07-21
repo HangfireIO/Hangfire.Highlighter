@@ -24,7 +24,7 @@ namespace Hangfire.Highlighter.Hubs
                 if (snippet != null)
                 {
                     Clients.Client(Context.ConnectionId)
-                        .highlight(snippet.Id, snippet.HighlightedCode);
+                        .highlight(snippet.Id, snippet.HighlightedCode, snippet.HighlightedIn?.TotalMilliseconds.ToString("N0"));
                 }
             }
         }
