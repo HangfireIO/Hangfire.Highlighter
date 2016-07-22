@@ -7,13 +7,8 @@ namespace Hangfire.Highlighter
     {
         public static void RegisterRoutes(RouteCollection routes)
         {
-            routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
-
-            routes.MapRoute(
-                name: "Default",
-                url: "{controller}/{action}/{id}",
-                defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional }
-            );
+            routes.MapRoute("home", "", new { controller = "Home", action = "Index" });
+            routes.MapRoute("create", "create", new { controller = "Home", action = "Create" });
         }
     }
 }

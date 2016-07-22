@@ -37,7 +37,7 @@ namespace Hangfire.Highlighter.Controllers
                     _jobs.ContinueWith<SnippetHighlighter>(parentId, x => x.SendToSubscribers(snippet.Id));
                 }
 
-                return RedirectToAction("Index", new { id = snippet.Id });
+                return RedirectToAction("Index");
             }
 
             return View(snippet);
