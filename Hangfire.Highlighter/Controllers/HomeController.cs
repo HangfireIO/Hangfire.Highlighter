@@ -31,11 +31,8 @@ namespace Hangfire.Highlighter.Controllers
                 _db.CodeSnippets.Add(snippet);
                 _db.SaveChanges();
 
-                using (StackExchange.Profiling.MiniProfiler.StepStatic("Job enqueue"))
-                {
-                    var parentId = _jobs.Enqueue<SnippetHighlighter>(x => x.HighlightAsync(snippet.Id));
-                    _jobs.ContinueWith<SnippetHighlighter>(parentId, x => x.SendToSubscribers(snippet.Id));
-                }
+                var parentId = _jobs.Enqueue<SnippetHighlighter>(x => x.HighlightAsync(snippet.Id));
+                _jobs.ContinueWith<SnippetHighlighter>(parentId, x => x.SendToSubscribers(snippet.Id));
 
                 return RedirectToAction("Index");
             }
