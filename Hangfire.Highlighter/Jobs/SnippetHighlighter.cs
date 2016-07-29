@@ -49,7 +49,7 @@ namespace Hangfire.Highlighter.Jobs
 
         public async Task CleanUpAsync()
         {
-            await _dbContext.Database.ExecuteSqlCommandAsync("TRUNCATE TABLE [CodeSnippets]");
+            await _dbContext.Database.ExecuteSqlCommandAsync("DELETE FROM [CodeSnippets]");
         }
 
         public void Dispose()
