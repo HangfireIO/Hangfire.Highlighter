@@ -44,4 +44,7 @@ pre {
     padding: 0;
     background: transparent;
     border: none;
+    word-break: break-all;
+    word-wrap: break-word;
+    white-space: pre-wrap;
 }
