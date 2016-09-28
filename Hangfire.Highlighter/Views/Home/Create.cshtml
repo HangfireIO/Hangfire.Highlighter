@@ -11,6 +11,7 @@
         @Html.LabelFor(model => model.SourceCode)
         @Html.ValidationMessageFor(model => model.SourceCode)
         @Html.TextAreaFor(model => model.SourceCode, new { @class = "form-control", style = "min-height: 300px;", autofocus = "true" })
+        @Html.TextBox("email", null)
     </div>
 
     <button type="submit" class="btn btn-primary">Create</button>

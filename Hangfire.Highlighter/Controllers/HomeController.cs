@@ -22,8 +22,14 @@ namespace Hangfire.Highlighter.Controllers
         }
 
         [HttpPost]
-        public ActionResult Create([Bind(Include = "SourceCode")] CodeSnippet snippet)
+        public ActionResult Create([Bind(Include = "SourceCode")] CodeSnippet snippet, string email)
         {
+            if (!String.IsNullOrEmpty(email))
+            {
+                // Simplest SPAM prevention trick
+                return RedirectToAction("Index");
+            }
+
             if (ModelState.IsValid)
             {
                 snippet.CreatedAt = DateTime.UtcNow;

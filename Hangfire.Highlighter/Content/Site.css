@@ -48,3 +48,8 @@ pre {
     word-wrap: break-word;
     white-space: pre-wrap;
 }
+
+/* Email field is used for SPAM checks in this app */
+#email {
+    display: none; 
+}
