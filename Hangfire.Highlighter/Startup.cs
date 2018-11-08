@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Transactions;
 using Hangfire.Dashboard;
 using Hangfire.Highlighter;
 using Hangfire.Highlighter.Jobs;
+using Hangfire.SqlServer;
 using Microsoft.Owin;
 using Owin;
 
@@ -14,7 +16,13 @@ namespace Hangfire.Highlighter
     {
         public static IEnumerable<IDisposable> GetHangfireConfiguration()
         {
-            GlobalConfiguration.Configuration.UseSqlServerStorage("HighlighterDb");
+            GlobalConfiguration.Configuration.UseSqlServerStorage("HighlighterDb", new SqlServerStorageOptions
+            {
+                CommandBatchMaxTimeout = TimeSpan.FromSeconds(30),
+                QueuePollInterval = TimeSpan.FromTicks(1),
+                TransactionIsolationLevel = IsolationLevel.ReadCommitted,
+                SlidingInvisibilityTimeout = TimeSpan.FromMinutes(1)
+            });
 
             yield return new BackgroundJobServer();
         }
