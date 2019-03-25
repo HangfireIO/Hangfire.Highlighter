@@ -16,13 +16,19 @@ namespace Hangfire.Highlighter
     {
         public static IEnumerable<IDisposable> GetHangfireConfiguration()
         {
-            GlobalConfiguration.Configuration.UseSqlServerStorage("HighlighterDb", new SqlServerStorageOptions
-            {
-                CommandBatchMaxTimeout = TimeSpan.FromSeconds(30),
-                QueuePollInterval = TimeSpan.FromTicks(1),
-                TransactionIsolationLevel = IsolationLevel.ReadCommitted,
-                SlidingInvisibilityTimeout = TimeSpan.FromMinutes(1)
-            });
+            GlobalConfiguration.Configuration
+                .SetDataCompatibilityLevel(CompatibilityLevel.Version_170)
+                .UseSimpleAssemblyNameTypeSerializer()
+                .UseRecommendedSerializerSettings()
+                .UseSqlServerStorage("HighlighterDb", new SqlServerStorageOptions
+                {
+                    CommandBatchMaxTimeout = TimeSpan.FromSeconds(30),
+                    QueuePollInterval = TimeSpan.Zero,
+                    TransactionIsolationLevel = IsolationLevel.ReadCommitted,
+                    SlidingInvisibilityTimeout = TimeSpan.FromMinutes(1),
+                    UsePageLocksOnDequeue = true,
+                    DisableGlobalLocks = true
+                });
 
             yield return new BackgroundJobServer();
         }
