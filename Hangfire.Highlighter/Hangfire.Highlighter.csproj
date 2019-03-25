@@ -56,10 +56,10 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="Hangfire.Core, Version=1.7.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Hangfire.Core.1.7.0-beta2\lib\net45\Hangfire.Core.dll</HintPath>
+      <HintPath>..\packages\Hangfire.Core.1.7.0-rc2\lib\net46\Hangfire.Core.dll</HintPath>
     </Reference>
     <Reference Include="Hangfire.SqlServer, Version=1.7.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Hangfire.SqlServer.1.7.0-beta2\lib\net45\Hangfire.SqlServer.dll</HintPath>
+      <HintPath>..\packages\Hangfire.SqlServer.1.7.0-rc2\lib\net45\Hangfire.SqlServer.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.AspNet.SignalR.Core, Version=2.3.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.AspNet.SignalR.Core.2.3.0\lib\net45\Microsoft.AspNet.SignalR.Core.dll</HintPath>
