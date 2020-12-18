@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using System.Transactions;
 using System.Web.Mvc;
 using Hangfire.Highlighter.Jobs;
 using Hangfire.Highlighter.Models;
@@ -9,7 +10,7 @@ namespace Hangfire.Highlighter.Controllers
     public class HomeController : Controller
     {
         private readonly HighlighterDbContext _db = new HighlighterDbContext();
-        private readonly BackgroundJobClient _jobs = new BackgroundJobClient();
+        private readonly SnippetHighlighter _highlighter = new SnippetHighlighter();
 
         public ActionResult Index()
         {
@@ -33,12 +34,7 @@ namespace Hangfire.Highlighter.Controllers
             if (ModelState.IsValid)
             {
                 snippet.CreatedAt = DateTime.UtcNow;
-
-                _db.CodeSnippets.Add(snippet);
-                _db.SaveChanges();
-
-                var parentId = _jobs.Enqueue<SnippetHighlighter>(x => x.HighlightAsync(snippet.Id));
-                _jobs.ContinueWith<SnippetHighlighter>(parentId, x => x.SendToSubscribers(snippet.Id));
+                _highlighter.CreateSnippet(snippet);
 
                 return RedirectToAction("Index");
             }

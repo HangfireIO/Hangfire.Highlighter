@@ -1,12 +1,15 @@
 ﻿using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
-using System.Transactions;
+using System.Configuration;
 using Hangfire.Dashboard;
 using Hangfire.Highlighter;
 using Hangfire.Highlighter.Jobs;
 using Hangfire.SqlServer;
 using Microsoft.Owin;
 using Owin;
+using Serilog;
+using Serilog.Exceptions;
 
 [assembly:OwinStartup(typeof(Startup))]
 
@@ -16,21 +19,35 @@ namespace Hangfire.Highlighter
     {
         public static IEnumerable<IDisposable> GetHangfireConfiguration()
         {
+            Log.Logger = new LoggerConfiguration()
+                .Enrich.WithProperty("App", "Hangfire.Highlighter")
+                .Enrich.WithMachineName()
+                .Enrich.WithProcessId()
+                .Enrich.WithThreadId()
+                .Enrich.WithExceptionDetails()
+                .MinimumLevel.Verbose()
+                .CreateLogger();
+
             GlobalConfiguration.Configuration
                 .SetDataCompatibilityLevel(CompatibilityLevel.Version_170)
+                .UseSerilogLogProvider()
                 .UseSimpleAssemblyNameTypeSerializer()
                 .UseRecommendedSerializerSettings()
                 .UseSqlServerStorage("HighlighterDb", new SqlServerStorageOptions
                 {
                     CommandBatchMaxTimeout = TimeSpan.FromSeconds(30),
-                    QueuePollInterval = TimeSpan.Zero,
-                    TransactionIsolationLevel = IsolationLevel.ReadCommitted,
+                    QueuePollInterval = TimeSpan.FromMilliseconds(450),
                     SlidingInvisibilityTimeout = TimeSpan.FromMinutes(1),
-                    UsePageLocksOnDequeue = true,
-                    DisableGlobalLocks = true
+                    UseRecommendedIsolationLevel = true,
+                    DisableGlobalLocks = true,
+                    EnableHeavyMigrations = true
                 });
 
-            yield return new BackgroundJobServer();
+            yield return new BackgroundJobServer(new BackgroundJobServerOptions
+            {
+                WorkerCount = 4,
+                StopTimeout = TimeSpan.FromSeconds(5)
+            });
         }
 
         public void Configuration(IAppBuilder app)
