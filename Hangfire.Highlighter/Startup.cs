@@ -36,9 +36,9 @@ namespace Hangfire.Highlighter
                 .UseRecommendedSerializerSettings()
                 .UseSqlServerStorage("HighlighterDb", new SqlServerStorageOptions
                 {
-                    CommandBatchMaxTimeout = TimeSpan.FromSeconds(30),
-                    QueuePollInterval = TimeSpan.FromMilliseconds(450),
-                    SlidingInvisibilityTimeout = TimeSpan.FromMinutes(1),
+                    CommandBatchMaxTimeout = TimeSpan.FromMinutes(5),
+                    QueuePollInterval = TimeSpan.Zero,
+                    SlidingInvisibilityTimeout = TimeSpan.FromMinutes(5),
                     UseRecommendedIsolationLevel = true,
                     DisableGlobalLocks = true,
                     EnableHeavyMigrations = true
