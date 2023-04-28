@@ -2,6 +2,7 @@
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Configuration;
+using System.Net;
 using Hangfire.Dashboard;
 using Hangfire.Highlighter;
 using Hangfire.Highlighter.Jobs;
@@ -19,6 +20,8 @@ namespace Hangfire.Highlighter
     {
         public static IEnumerable<IDisposable> GetHangfireConfiguration()
         {
+            ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12 | SecurityProtocolType.Tls11;
+
             Log.Logger = new LoggerConfiguration()
                 .Enrich.WithProperty("App", "Hangfire.Highlighter")
                 .Enrich.WithMachineName()
@@ -30,17 +33,12 @@ namespace Hangfire.Highlighter
                 .CreateLogger();
 
             GlobalConfiguration.Configuration
-                .SetDataCompatibilityLevel(CompatibilityLevel.Version_170)
+                .SetDataCompatibilityLevel(CompatibilityLevel.Version_180)
                 .UseSerilogLogProvider()
                 .UseSimpleAssemblyNameTypeSerializer()
                 .UseRecommendedSerializerSettings()
                 .UseSqlServerStorage("HighlighterDb", new SqlServerStorageOptions
                 {
-                    CommandBatchMaxTimeout = TimeSpan.FromMinutes(5),
-                    QueuePollInterval = TimeSpan.Zero,
-                    SlidingInvisibilityTimeout = TimeSpan.FromMinutes(5),
-                    UseRecommendedIsolationLevel = true,
-                    DisableGlobalLocks = true,
                     EnableHeavyMigrations = true
                 });
 
