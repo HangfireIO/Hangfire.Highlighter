@@ -1,4 +1,5 @@
 ﻿using System.Data.Entity;
+using System.Data.Entity.SqlServer;
 using System.Web.Mvc;
 using System.Web.Routing;
 using Hangfire.Highlighter.Migrations;
@@ -14,6 +15,7 @@ namespace Hangfire.Highlighter
             AreaRegistration.RegisterAllAreas();
             RouteConfig.RegisterRoutes(RouteTable.Routes);
 
+            DbConfiguration.SetConfiguration(new AppServiceMicrosoftSqlDbConfiguration());
             Database.SetInitializer(new MigrateDatabaseToLatestVersion<HighlighterDbContext, Configuration>());
         }
 
