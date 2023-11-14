@@ -173,3 +173,9 @@ UpgradeLog*.htm
 # Microsoft Fakes
 FakesAssemblies/
 HangFire.Highlighter/Properties/PublishProfiles/nuget.hangfire.io.pubxml
+
+*.[Pp]ublish.xml
+*.azurePubxml
+*.pubxml
+*.publishproj
+profile.arm.json
