@@ -56,7 +56,8 @@ namespace Hangfire.Highlighter
             app.UseHangfireAspNet(GetHangfireConfiguration);
             app.UseHangfireDashboard("/hangfire", new DashboardOptions
             {
-                Authorization = new IDashboardAuthorizationFilter[0]
+                Authorization = new IDashboardAuthorizationFilter[0],
+                IsReadOnlyFunc = _ => true 
             });
             
             RecurringJob.AddOrUpdate<SnippetHighlighter>(
